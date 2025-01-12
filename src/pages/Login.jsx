@@ -11,7 +11,7 @@ const Login = () => {
   return (
     <>
       <main className="flex justify-center items-center flex-col h-svh">
-        <div className="py-10 px-6 w-5/6 sm:w-2/4 lg:w-1/4 rounded-xl bg-secondary shadow-card">
+        <div className="py-10 px-6 w-full sm:w-2/4 lg:w-1/4 rounded-xl bg-secondary sm:shadow-card lg:shadow-card">
           <header className="flex flex-col mb-5 gap-10 text-primary">
             <div className="flex gap-2">
               <RiGraduationCapFill className="w-8 h-8 text-btn-color" />
@@ -29,11 +29,11 @@ const Login = () => {
 
           {/* login */}
           <form action="" 
-            className="w-full rounded-xl py-3 flex flex-col gap-5">
+            className="w-full rounded-xl py-3 flex flex-col gap-3">
             <div className="flex flex-col w-full text-sm placeholder:text-background">
               <label 
                 htmlFor="user_email"
-                className="text-sm text-primary">
+                className="text-xs font-medium text-primary">
                 Email</label>
               <input 
                 type="text"
@@ -46,10 +46,10 @@ const Login = () => {
             <div className="flex flex-col w-full text-sm placeholder:text-background">
               <label 
                 htmlFor="user_password"
-                className="text-sm text-primary">
+                className="text-xs font-medium text-primary">
                 Password</label>
                 <input 
-                type="text"
+                type="password"
                 id="user_password"
                 placeholder="**********"
                 required
@@ -57,7 +57,8 @@ const Login = () => {
             </div>
 
             <button
-              className="bg-btn-color py-2 rounded-lg w-full text-base font-semibold text-primary hover:bg-btn-color/[0.9] hover:text-primary/[0.9]">
+              type="submit"
+              className="bg-btn-color py-2 rounded-lg w-full text-base font-semibold text-primary hover:bg-btn-color/[0.9] mt-3 hover:text-primary/[0.9]">
                 Login
             </button>
 
