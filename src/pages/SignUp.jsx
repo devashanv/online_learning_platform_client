@@ -29,7 +29,7 @@ const SignUp = () => {
           {/* signup */}
           <form action="" 
             className="w-full rounded-xl py-3 flex flex-col gap-3">
-            <div className="flex flex-col w-full text-sm placeholder:text-background mb-5">
+            <div className="flex flex-col w-full text-sm placeholder:text-background mb-1">
               <label 
                 htmlFor="password"
                 className="text-xs font-medium text-primary">
@@ -94,6 +94,7 @@ const SignUp = () => {
             </div>
 
             <button
+              type="submit"
               className="bg-btn-color py-2 rounded-lg w-full text-base font-semibold text-primary hover:bg-btn-color/[0.9] mt-3 hover:text-primary/[0.9]">
                 Register
             </button>
