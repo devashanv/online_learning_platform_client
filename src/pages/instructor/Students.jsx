@@ -7,10 +7,10 @@ const Students = () => {
 
   return (
     <>
-        <div className="w-full flex flex-col gap-4 lg:w-4/5 mt-24 mx-auto">
+        <div className="w-11/12  flex flex-col gap-4 mt-14 lg:w-4/5 lg:mt-24 mx-auto">
             <button
                 onClick={() => navigate("/dashboard")}
-                className="bg-secondary shadow-card p-2 w-1/6 rounded-lg flex justify-center items-center gap-2 mb-10 hover:text-btn-color">
+                className="bg-secondary text-xs w-1/3 shadow-card p-2 lg:w-1/6 rounded-lg flex justify-center items-center gap-2 mb-10 hover:text-btn-color">
                 <FaArrowLeftLong/>
                 Back to courses
             </button>
