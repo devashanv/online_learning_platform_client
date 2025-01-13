@@ -11,6 +11,7 @@ import { MdOutlineSpaceDashboard, MdFormatListBulleted, MdOutlineAddToPhotos } f
 import { HiMenuAlt2 } from "react-icons/hi";
 import { BsBook } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi2";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,6 +20,8 @@ const Dashboard = () => {
   const [isMenuOpen, setisMenuOpen] = useState(true);
 
   const [activeLink, setActiveLink] = useState("dashboard");
+
+  const navgate = useNavigate();
 
   const handleAcitive = (link) => {
     setActiveLink(link);
@@ -103,6 +106,16 @@ const Dashboard = () => {
                 }>
                 <HiOutlineUsers className="w-4 h-4" />
                 Studnets
+              </p>
+
+              <p 
+                onClick={() => navgate("/alert")}
+                className={activeLink === "student" ?
+                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                }>
+                <HiOutlineUsers className="w-4 h-4" />
+                alert
               </p>
             </div>
           </div>

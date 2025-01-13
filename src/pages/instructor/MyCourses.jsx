@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import { ImInfo } from "react-icons/im";
 
 const MyCourses = (prop) => {
-
   const navigate = useNavigate();
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [deleteCourse, setDeleteCourse] = useState(null);
+
+  const canselDelete = () => {
+    setShowAlert(false);
+    setDeleteCourse(null);
+
+  }
+
+  const confirmDelete = () => {
+      alert(`Deleted : ${deleteCourse}`)
+      setShowAlert(false);
+      setDeleteCourse(null);
+  }
+
+  const handleAlert = id => {
+    setDeleteCourse(id);
+    setShowAlert(true);
+  }
 
   return (
     <>
@@ -27,30 +46,33 @@ const MyCourses = (prop) => {
                 </header>
 
                 <p className="h-3/6 text-xs mt-5">
-                  Learn the basics of building websites, including HTML, CSS, and
-                  JavaScript.
+                  Learn the basics of building websites, including HTML, CSS,
+                  and JavaScript.
                 </p>
 
                 <div className="flex gap-3 justify-end">
-                  <button 
+                  <button
                     onClick={() => navigate("/editcourse")}
-                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
-                    <FaRegEdit  className="w-5 h-5"/>
-                  </button>                  
-                  <button 
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
+                  >
+                    <FaRegEdit className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => handleAlert(101)}
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
+                  >
+                    <FaRegTrashAlt className="w-5 h-5" />
+                  </button>
+                  <button
                     onClick={() => navigate("/student")}
-                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
-                    <FaRegTrashAlt className="w-5 h-5"/>
-                  </button>                  
-                  <button 
-                    onClick={() => navigate("/student")}
-                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
-                    <ImInfo  className="w-5 h-5"/>
-                  </button>                  
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
+                  >
+                    <ImInfo className="w-5 h-5" />
+                  </button>
                 </div>
               </div>
             </div>
-          </div>        
+          </div>
         </>
       ) : (
         <>
@@ -72,34 +94,57 @@ const MyCourses = (prop) => {
                 </header>
 
                 <p className="h-3/6 text-xs mt-5">
-                  Learn the basics of building websites, including HTML, CSS, and
-                  JavaScript.
+                  Learn the basics of building websites, including HTML, CSS,
+                  and JavaScript.
                 </p>
-                
-                <div className="flex gap-3 justify-end">
-                  <button 
-                    onClick={() => navigate("/editcourse")}
-                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
-                    <FaRegEdit  className="w-5 h-5"/>
-                  </button>                  
-                  <button 
-                    onClick={() => navigate("/student")}
-                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
-                    <FaRegTrashAlt className="w-5 h-5"/>
-                  </button>                  
-                  <button 
-                    onClick={() => navigate("/student")}
-                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
-                    <ImInfo  className="w-5 h-5"/>
-                  </button>                  
-                </div>
 
+                <div className="flex gap-3 justify-end">
+                  <button
+                    onClick={() => handleAlert(101)}
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
+                  >
+                    <FaRegTrashAlt className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => navigate("/editcourse")}
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
+                  >
+                    <FaRegEdit className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => navigate("/student")}
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
+                  >
+                    <ImInfo className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </>
       )}
-  
+
+      {/* delete popup */}
+      {showAlert ? (
+        <>
+          <div className="glass-effect flex justify-center items-center w-full h-svh absolute top-0 ml-[-20px]">
+              <div className="bg-secondary flex flex-col items-center justify-center shadow-card h-52 p-5 w-96 rounded-lg border-t-[10px] border-t-btn-color">
+                <p className="text-center text-lg">Are you sure to delete?</p>
+                <div className="w-full flex justify-center items-center gap-8 mt-8">
+                  <button
+                      onClick={() => confirmDelete()} 
+                      className="bg-red-600 text-secondary px-4 py-2 rounded-lg hover:bg-red-600/[0.8]">
+                      Delete</button>
+                  <button
+                      onClick={() => canselDelete()}
+                      className="border border-gray-600 text-primary px-4 py-2 rounded-lg hover:bg-background/[0.5]">
+                      Cancel</button>                
+                </div>
+
+              </div>
+          </div>
+        </>
+      ) : null}
     </>
   );
 }
