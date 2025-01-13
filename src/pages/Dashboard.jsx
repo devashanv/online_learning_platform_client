@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
-
-import { FaRegWindowClose } from "react-icons/fa";
-import { RiGraduationCapFill } from "react-icons/ri";
-import { MdOutlineSpaceDashboard, MdFormatListBulleted } from "react-icons/md";
-import { HiMenuAlt2 } from "react-icons/hi";
-import { BsBook } from "react-icons/bs";
 import AllCourses from './common/AllCourses';
 import MyEnrollments from './student/MyEnrollments';
 import MyCourses from './instructor/MyCourses';
+import AddNewCourse from './instructor/AddNewCourse';
+import Students from './instructor/Students';
+
+import { FaRegWindowClose } from "react-icons/fa";
+import { RiGraduationCapFill } from "react-icons/ri";
+import { MdOutlineSpaceDashboard, MdFormatListBulleted, MdOutlineAddToPhotos } from "react-icons/md";
+import { HiMenuAlt2 } from "react-icons/hi";
+import { BsBook } from "react-icons/bs";
+import { HiOutlineUsers } from "react-icons/hi2";
+
 
 
 const Dashboard = () => {
   //side toggle menu
-  const [isMenuOpen, setisMenuOpen] = useState(false);
+  const [isMenuOpen, setisMenuOpen] = useState(true);
 
   const [activeLink, setActiveLink] = useState("dashboard");
 
@@ -60,6 +64,7 @@ const Dashboard = () => {
                 <MdOutlineSpaceDashboard className="w-4 h-4" />
                 Dashboard
               </p>
+
               <p 
                 onClick={() => handleAcitive("myenroll")}
                 className={activeLink === "myenroll" ?
@@ -69,6 +74,7 @@ const Dashboard = () => {
                 <MdFormatListBulleted className="w-4 h-4" />
                 My Enrollments
               </p>
+
               <p 
                 onClick={() => handleAcitive("mycourse")}
                 className={activeLink === "mycourse" ?
@@ -77,6 +83,26 @@ const Dashboard = () => {
                 }>
                 <BsBook className="w-4 h-4" />
                 My courses
+              </p>
+
+              <p 
+                onClick={() => handleAcitive("addcourse")}
+                className={activeLink === "addcourse" ?
+                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                }>
+                <MdOutlineAddToPhotos className="w-4 h-4" />
+                Add course
+              </p>
+
+              <p 
+                onClick={() => handleAcitive("student")}
+                className={activeLink === "student" ?
+                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                }>
+                <HiOutlineUsers className="w-4 h-4" />
+                Studnets
               </p>
             </div>
           </div>
@@ -104,7 +130,9 @@ const Dashboard = () => {
             </nav>
             
             {activeLink === "dashboard" ? (<AllCourses status="open"/>) :
-             activeLink === "myenroll" ? (<MyEnrollments status="open"/>) : (<MyCourses status="open"/>)}
+             activeLink === "myenroll" ? (<MyEnrollments status="open"/>) : 
+             activeLink === "mycourse" ? (<MyCourses status="open"/>) : 
+             activeLink === "addcourse" ? (<AddNewCourse status="open"/>) : (<Students />)}
           </main>
         ) : (
           <main className="bg-secondary w-full px-5 pt-2">
@@ -128,7 +156,9 @@ const Dashboard = () => {
             </nav>
 
             {activeLink === "dashboard" ? (<AllCourses status="close"/>) :
-             activeLink === "myenroll" ? (<MyEnrollments status="close"/>) : (<MyCourses status="close"/>)}
+             activeLink === "myenroll" ? (<MyEnrollments status="close"/>) : 
+             activeLink === "mycourse" ? (<MyCourses status="close"/>) : 
+             activeLink === "addcourse" ? (<AddNewCourse status="open"/>) : (<Students />)}
           </main>
         )}
       </div>
