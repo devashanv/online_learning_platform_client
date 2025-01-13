@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Students from './pages/instructor/Students';
 import MyCourses from './pages/instructor/MyCourses';
+import EditCourse from './pages/instructor/EditCourse';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/student" element={<Students />}/>
         <Route path="/mycourse" element={<MyCourses />}/>
+        <Route path="/editcourse" element={<EditCourse />}/>
       </Routes>
     </>
   )

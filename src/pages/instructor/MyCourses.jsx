@@ -33,7 +33,7 @@ const MyCourses = (prop) => {
 
                 <div className="flex gap-3 justify-end">
                   <button 
-                    onClick={() => navigate("/student")}
+                    onClick={() => navigate("/editcourse")}
                     className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
                     <FaRegEdit  className="w-5 h-5"/>
                   </button>                  
@@ -76,11 +76,21 @@ const MyCourses = (prop) => {
                   JavaScript.
                 </p>
                 
-                <div>
+                <div className="flex gap-3 justify-end">
+                  <button 
+                    onClick={() => navigate("/editcourse")}
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
+                    <FaRegEdit  className="w-5 h-5"/>
+                  </button>                  
                   <button 
                     onClick={() => navigate("/student")}
-                    className="w-full border-2 border-btn-color rounded-lg text-primary text-sm py-1 self-end mt-4 hover:bg-btn-color/[0.5]">
-                    More
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
+                    <FaRegTrashAlt className="w-5 h-5"/>
+                  </button>                  
+                  <button 
+                    onClick={() => navigate("/student")}
+                    className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color">
+                    <ImInfo  className="w-5 h-5"/>
                   </button>                  
                 </div>
 
