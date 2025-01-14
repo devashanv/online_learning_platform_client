@@ -61,7 +61,7 @@ const navigate = useNavigate();
                 <button
                 type="submit"
                 className="bg-btn-color py-2 rounded-lg w-full text-base font-semibold text-primary hover:bg-btn-color/[0.9] mt-3 hover:text-primary/[0.9]">
-                Edit Course
+                Update
                 </button>
 
             </form>            

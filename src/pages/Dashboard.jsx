@@ -107,16 +107,6 @@ const Dashboard = () => {
                 <HiOutlineUsers className="w-4 h-4" />
                 Studnets
               </p>
-
-              <p 
-                onClick={() => navgate("/alert")}
-                className={activeLink === "student" ?
-                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
-                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
-                }>
-                <HiOutlineUsers className="w-4 h-4" />
-                alert
-              </p>
             </div>
           </div>
         ) : null}
