@@ -25,12 +25,12 @@ const MyCourses = (prop) => {
       });
 
       if (!result) {
-        console.log(result.data);
+        toast.error(result.data);
       } else {
         setCourses(result.data.courses);
       }
     } catch (error) {
-      console.log(result.data.message);
+      toast.error(result.data.message);
     }
   };
 
@@ -47,7 +47,6 @@ const MyCourses = (prop) => {
       }
     } 
     catch (error) {
-      console.log(error)
       toast.error(result.message);
     }
   };
@@ -107,14 +106,14 @@ const MyCourses = (prop) => {
                     </button>
                     <button
                       onClick={() =>
-                        navigate("/editcourse", { state: { _id: course._id } })
+                        navigate("/editcourse", { state: { _id: course._id }})
                       }
                       className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
                     >
                       <FaRegEdit className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => navigate("/student")}
+                      onClick={() => navigate("/student", { state: { _id: course._id } })}
                       className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
                     >
                       <ImInfo className="w-5 h-5" />
@@ -151,19 +150,19 @@ const MyCourses = (prop) => {
 
                   <div className="flex gap-3 justify-end">
                     <button
-                      onClick={() => handleAlert()}
+                      onClick={() => handleAlert(course._id)}
                       className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
                     >
                       <FaRegTrashAlt className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => navigate("/editcourse")}
+                      onClick={() => navigate("/editcourse", { state: { _id: course._id } })}
                       className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
                     >
                       <FaRegEdit className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => navigate("/student")}
+                      onClick={() => navigate("/student", { state: { _id: course._id } })}
                       className="w-10 h-10 bg-secondary shadow-card justify-center items-center rounded-full flex hover:text-btn-color"
                     >
                       <ImInfo className="w-5 h-5" />

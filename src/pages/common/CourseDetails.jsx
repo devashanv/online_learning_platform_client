@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { AppContext } from '../../context/AppContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { AppContext } from '../../context/AppContext';
 
-const EditCourse = () => {
-    const {backendURL} = useContext(AppContext)
+const CourseDetails = () => {
+    const {backendURL, loggedUserData} = useContext(AppContext)
     const navigate = useNavigate();
 
     //course id
@@ -35,6 +35,7 @@ const EditCourse = () => {
             }
           }
           catch (error){
+            console.log(error)
             toast.error(result.data.message)
           }
         }
@@ -44,11 +45,14 @@ const EditCourse = () => {
 
 
     //update course
-    const updateCourseHandle = async (e) => {
+    const enrollCourseHandle = async (e) => {
         try{
             e.preventDefault();
+            
+            console.log("course", _id)
+            console.log("student", loggedUserData._id)
 
-            const {data} = await axios.put(`${backendURL}/api/course/update`, {_id, title, description, content})
+            const {data} = await axios.post(`${backendURL}/api/enroll/save`, {courseId: _id, studentId: loggedUserData._id})
 
             console.log(data)
             console.log(data.success)
@@ -74,10 +78,10 @@ const EditCourse = () => {
                 <FaArrowLeftLong/>
                 Back to courses
             </button>
-            <h2 className="text-3xl font-bold mb-10">Edit Course Details</h2>
+            <h2 className="text-3xl font-bold mb-10">{title}</h2>
             {/* edit form */}
             <form
-                onSubmit={updateCourseHandle} 
+                onSubmit={enrollCourseHandle} 
                 className="w-full rounded-xl py-3 flex flex-col gap-3">
                 <div className="flex flex-col gap-1 w-full text-sm placeholder:text-background">
                     <label
@@ -87,12 +91,12 @@ const EditCourse = () => {
                     </label>
                     <input
                         value={title}
-                        onChange={e => setTitle(e.target.value)}
                         type="text"
                         id="title"
                         placeholder= "Introduction to HTML"
                         required
-                        className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm"/>
+                        disabled
+                        className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm disabled"/>
                 </div>
 
                 <div className="flex flex-col gap-1 w-full text-sm placeholder:text-background">
@@ -101,10 +105,10 @@ const EditCourse = () => {
                     </label>
                     <textarea
                         value={description}
-                        onChange={e => setDescription(e.target.value)}
                         type="text"
                         id="description"
                         placeholder="enter course description"
+                        disabled
                         required
                         className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm resize-none">
                     </textarea>
@@ -118,18 +122,18 @@ const EditCourse = () => {
                     </label>
                     <input
                         value={content}
-                        onChange={e => setContent(e.target.value)}
                         type="text"
                         id="content"
                         placeholder="course content"
+                        disabled
                         required
-                        className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm"/>
+                        className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm "/>
                 </div>
 
                 <button
                     type="submit"
                     className="bg-btn-color py-2 rounded-lg w-full text-base font-semibold text-primary hover:bg-btn-color/[0.9] mt-3 hover:text-primary/[0.9]">
-                    Update
+                    Enroll
                 </button>
             </form>               
         </div>
@@ -138,4 +142,4 @@ const EditCourse = () => {
   )
 }
 
-export default EditCourse
+export default CourseDetails
