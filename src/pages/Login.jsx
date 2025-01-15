@@ -1,12 +1,52 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import axios from 'axios';
 
 import { RiGraduationCapFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
+import { toast } from 'react-toastify';
+
+
 
 const Login = () => {
 
   const navigate = useNavigate();
+
+  //get context data
+  const {backendURL, setIsLogged, getUserData} = useContext(AppContext);
   
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  //login
+  const loginSubmitHandle = async (e) => {
+    try{
+      e.preventDefault();
+
+      //cookie
+      axios.defaults.withCredentials = true;
+
+      const {data} = await axios.post(`${backendURL}/api/auth/login`, {email, password});
+
+      if (data.success){
+        setIsLogged(true);
+        toast.success(data.message)
+        
+        //get user data
+        await getUserData(data.user._id);
+
+        //redirection
+        navigate("/dashboard");
+      }
+      else{
+        toast.error(data.message)
+      }
+
+    }
+    catch (error) {
+      toast.error(data.message)
+    }
+  }
 
   return (
     <>
@@ -28,14 +68,15 @@ const Login = () => {
           </header>
 
           {/* login */}
-          <form action="" 
+          <form onSubmit={loginSubmitHandle} 
             className="w-full rounded-xl py-3 flex flex-col gap-3">
             <div className="flex flex-col w-full text-sm placeholder:text-background">
               <label 
                 htmlFor="user_email"
                 className="text-xs font-medium text-primary">
                 Email</label>
-              <input 
+              <input
+                onChange={e => setEmail(e.target.value)}
                 type="text"
                 id="user_email"
                 placeholder="Jhon@gmail.com"
@@ -48,17 +89,17 @@ const Login = () => {
                 htmlFor="user_password"
                 className="text-xs font-medium text-primary">
                 Password</label>
-                <input 
-                type="password"
-                id="user_password"
-                placeholder="**********"
-                required
-                className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm" />
+                <input
+                  onChange={e => setPassword(e.target.value)} 
+                  type="password"
+                  id="user_password"
+                  placeholder="**********"
+                  required
+                  className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm" />
             </div>
 
             <button
               type="submit"
-              onClick={() => navigate("/dashboard")}
               className="bg-btn-color py-2 rounded-lg w-full text-base font-semibold text-primary hover:bg-btn-color/[0.9] mt-3 hover:text-primary/[0.9]">
                 Login
             </button>

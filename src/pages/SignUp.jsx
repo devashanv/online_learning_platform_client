@@ -1,11 +1,47 @@
-import React from 'react'
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 
 import { RiGraduationCapFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../context/AppContext';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
 
   const navigate = useNavigate();
+  const {backendURL, setIsLogged} = useContext(AppContext);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+  //signup
+  const registerSubmitHandle = async (e) => {
+    try{
+      e.preventDefault();
+
+      //cookie
+      axios.defaults.withCredentials = true;
+
+      const {data} = await axios.post(`${backendURL}/api/auth/register`, {firstName, lastName, email, password, role});
+
+      if (data.success){
+        setIsLogged(true);
+        toast.success(data.message)
+        toast.info("Plase Login now.")
+        navigate("/")
+      }
+      else{
+        toast.error(data.message)
+      }
+    }
+    catch{
+      toast.error(data.error)
+    }
+
+  }
 
   return (
     <>
@@ -27,7 +63,7 @@ const SignUp = () => {
           </header>
 
           {/* signup */}
-          <form action="" 
+          <form onSubmit={registerSubmitHandle}
             className="w-full rounded-xl py-3 flex flex-col gap-3">
             <div className="flex flex-col w-full text-sm placeholder:text-background mb-1">
               <label 
@@ -37,7 +73,8 @@ const SignUp = () => {
               <div
                 className="text-xs font-medium flex gap-20 mt-3">
                 <lable>                   
-                  <input 
+                  <input
+                    onChange={e => setRole(e.target.value)}
                     type="radio"
                     name="userType"
                     value="student"
@@ -46,6 +83,7 @@ const SignUp = () => {
 
                 <lable>
                   <input 
+                    onChange={e => setRole(e.target.value)}
                     type="radio"
                     name="userType"
                     value="instrutor"
@@ -56,13 +94,28 @@ const SignUp = () => {
 
             <div className="flex flex-col w-full text-sm placeholder:text-background">
               <label 
-                htmlFor="full_name"
+                htmlFor="first_name"
                 className="text-xs font-medium text-primary">
-                Ful Name</label>
-              <input 
+                First Name</label>
+              <input
+                onChange={e => setFirstName(e.target.value)} 
                 type="text"
-                id="full_name"
-                placeholder="Jhon Doe"
+                id="first_name"
+                placeholder="Jhon"
+                required
+                className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm" />
+            </div>
+
+            <div className="flex flex-col w-full text-sm placeholder:text-background">
+              <label 
+                htmlFor="last_name"
+                className="text-xs font-medium text-primary">
+                Last Name</label>
+              <input 
+              onChange={e => setLastName(e.target.value)}
+                type="text"
+                id="last_name"
+                placeholder="Doe"
                 required
                 className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm" />
             </div>
@@ -72,8 +125,9 @@ const SignUp = () => {
                 htmlFor="email"
                 className="text-xs font-medium text-primary">
                 Email</label>
-              <input 
-                type="text"
+              <input
+                onChange={e => setEmail(e.target.value)}
+                type="email"
                 id="email"
                 placeholder="jhon@gmail.com"
                 required
@@ -85,12 +139,13 @@ const SignUp = () => {
                 htmlFor="password"
                 className="text-xs font-medium text-primary">
                 Password</label>
-                <input 
-                type="password"
-                id="password"
-                placeholder="**********"
-                required
-                className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm" />
+                <input
+                  onChange={e => setPassword(e.target.value)}
+                  type="password"
+                  id="password"
+                  placeholder="**********"
+                  required
+                  className="py-2 pl-4 rounded-lg border-2 placeholder:text-sm" />
             </div>
 
             <button
