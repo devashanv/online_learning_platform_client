@@ -43,6 +43,8 @@ const CourseDetails = () => {
         getCourse();
     }, [])
 
+    
+
 
     //update course
     const enrollCourseHandle = async (e) => {
