@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AllCourses from './common/AllCourses';
 import MyEnrollments from './student/MyEnrollments';
 import MyCourses from './instructor/MyCourses';
@@ -12,16 +12,20 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { BsBook } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
 
 
 
 const Dashboard = () => {
   //side toggle menu
   const [isMenuOpen, setisMenuOpen] = useState(true);
-
   const [activeLink, setActiveLink] = useState("dashboard");
-
   const navgate = useNavigate();
+
+  //logged user
+  const {loggedUserData} = useContext(AppContext);
+  const userRole = loggedUserData.role;
+  
 
   const handleAcitive = (link) => {
     setActiveLink(link);
@@ -52,61 +56,79 @@ const Dashboard = () => {
                   Online Learning Platform
                 </h1>
 
-                <p className="text-background mt-5 text-xs">Jhon Doe</p>
+                <p className="text-background mt-5 text-xs">
+                  {loggedUserData ? (`${loggedUserData.firstName} ${loggedUserData.lastName}`) : "User Name"}
+                </p>
               </div>
             </div>
 
             {/* nav items */}
             <div className="py-3 flex flex-col">
-              <p 
-                onClick={() => handleAcitive("dashboard")}
-                className={activeLink === "dashboard" ?
-                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
-                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
-                }>
-                <MdOutlineSpaceDashboard className="w-4 h-4" />
-                Dashboard
-              </p>
+              {/* role based features */}
+              {userRole === "student" ? (
+                <>
+                <p 
+                  onClick={() => handleAcitive("dashboard")}
+                  className={activeLink === "dashboard" ?
+                    "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                    "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                  }>
+                  <MdOutlineSpaceDashboard className="w-4 h-4" />
+                  Dashboard
+                </p>
+                <p 
+                  onClick={() => handleAcitive("myenroll")}
+                  className={activeLink === "myenroll" ?
+                    "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                    "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                  }>
+                  <MdFormatListBulleted className="w-4 h-4" />
+                  My Enrollments
+                </p>
+                </>
+              ) : (
+                <>
+                <p 
+                  onClick={() => handleAcitive("dashboard")}
+                  className={activeLink === "dashboard" ?
+                    "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                    "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                  }>
+                  <MdOutlineSpaceDashboard className="w-4 h-4" />
+                  Dashboard
+                </p>
 
-              <p 
-                onClick={() => handleAcitive("myenroll")}
-                className={activeLink === "myenroll" ?
-                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
-                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
-                }>
-                <MdFormatListBulleted className="w-4 h-4" />
-                My Enrollments
-              </p>
+                <p 
+                  onClick={() => handleAcitive("mycourse")}
+                  className={activeLink === "mycourse" ?
+                    "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                    "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                  }>
+                  <BsBook className="w-4 h-4" />
+                  My courses
+                </p>
 
-              <p 
-                onClick={() => handleAcitive("mycourse")}
-                className={activeLink === "mycourse" ?
-                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
-                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
-                }>
-                <BsBook className="w-4 h-4" />
-                My courses
-              </p>
+                <p 
+                  onClick={() => handleAcitive("addcourse")}
+                  className={activeLink === "addcourse" ?
+                    "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                    "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                  }>
+                  <MdOutlineAddToPhotos className="w-4 h-4" />
+                  Add course
+                </p>
 
-              <p 
-                onClick={() => handleAcitive("addcourse")}
-                className={activeLink === "addcourse" ?
-                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
-                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
-                }>
-                <MdOutlineAddToPhotos className="w-4 h-4" />
-                Add course
-              </p>
-
-              <p 
-                onClick={() => handleAcitive("student")}
-                className={activeLink === "student" ?
-                  "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
-                  "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
-                }>
-                <HiOutlineUsers className="w-4 h-4" />
-                Studnets
-              </p>
+                <p 
+                  onClick={() => handleAcitive("student")}
+                  className={activeLink === "student" ?
+                    "bg-secondary flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer" :
+                    "bg-btn-color/[0.05]  flex justify-start items-center p-3 gap-2 text-sm hover:bg-btn-color/[0.2] hover:cursor-pointer"
+                  }>
+                  <HiOutlineUsers className="w-4 h-4" />
+                  Studnets
+                </p>
+                </>
+              )};
             </div>
           </div>
         ) : null}
