@@ -79,7 +79,7 @@ const MyCourses = (prop) => {
         <>
           {/* course sec */}
           <div className="h-auto">
-            <div className=" mx-auto flex flex-wrap justify-between">
+            <div className=" mx-auto flex flex-wrap justify-start gap-4">
               {courses.map((course) => (
                 <div
                   key={course._id}
@@ -126,10 +126,9 @@ const MyCourses = (prop) => {
         </>
       ) : (
         <>
-          <h1>my course - admin - close</h1>
           {/* courses sec */}
-          <div className="h-auto w-4/5 mx-auto">
-            <div className=" mx-auto flex flex-wrap justify-between">
+          <div className="h-auto  w-5/6 mx-auto">
+            <div className=" mx-auto flex flex-wrap justify-start gap-4">
               {/* card */}
               {courses.map((course) => (
                 <div

@@ -26,9 +26,6 @@ const Students = () => {
 
               setStudents(result.data.students)
 
-              console.log(result);
-              
-
               if (!result) {
                 toast.error(result.data.message);
               }
