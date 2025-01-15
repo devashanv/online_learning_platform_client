@@ -9,6 +9,7 @@ import MyCourses from './pages/instructor/MyCourses';
 import EditCourse from './pages/instructor/EditCourse';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CourseDetails from './pages/common/CourseDetails';
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/student" element={<Students />}/>
         <Route path="/mycourse" element={<MyCourses />}/>
         <Route path="/editcourse" element={<EditCourse />}/>
+        <Route path="/coursedetails" element={<CourseDetails />}/>
       </Routes>
     </>
   )

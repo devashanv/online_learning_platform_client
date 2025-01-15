@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { AppContext } from '../../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const AllCourses = (prop) => {
 
   const [courses, setCourses] = useState([]);
   const {backendURL} = useContext(AppContext)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCourses = async () => {
@@ -71,7 +73,10 @@ const AllCourses = (prop) => {
                     {course.description}
                   </p>
 
-                  <button className="w-full border-2 border-btn-color rounded-lg text-primary text-sm py-1 self-end mt-4 hover:bg-btn-color/[0.5]">
+                  <button
+                    onClick={() =>  navigate("/coursedetails", { state: { _id: course._id }})
+                    }  
+                    className="w-full border-2 border-btn-color rounded-lg text-primary text-sm py-1 self-end mt-4 hover:bg-btn-color/[0.5]">
                     More
                   </button>
                 </div>
@@ -121,7 +126,10 @@ const AllCourses = (prop) => {
                     {course.description}
                   </p>
 
-                  <button className="w-full border-2 border-btn-color rounded-lg text-primary text-sm py-1 self-end mt-4 hover:bg-btn-color/[0.5]">
+                  <button
+                    onClick={() =>  navigate("/coursedetails", { state: { _id: course._id }})
+                    }  
+                    className="w-full border-2 border-btn-color rounded-lg text-primary text-sm py-1 self-end mt-4 hover:bg-btn-color/[0.5]">
                     More
                   </button>
                 </div>

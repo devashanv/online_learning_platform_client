@@ -13,6 +13,8 @@ import { BsBook } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
@@ -20,10 +22,10 @@ const Dashboard = () => {
   //side toggle menu
   const [isMenuOpen, setisMenuOpen] = useState(true);
   const [activeLink, setActiveLink] = useState("dashboard");
-  const navgate = useNavigate();
+  const navigate = useNavigate();
 
   //logged user
-  const {loggedUserData} = useContext(AppContext);
+  const {loggedUserData, backendURL} = useContext(AppContext);
   const userRole = loggedUserData.role;
   
 
@@ -33,6 +35,24 @@ const Dashboard = () => {
 
   const openSideMenue = () => {
     setisMenuOpen(!isMenuOpen);
+  }
+
+  //logout
+  const logOut = async () => {
+    try{
+      const result = await axios.post(`${backendURL}/api/auth/logout`)
+
+      if(!result){
+        toast.error(result.data.message)
+      }
+
+      toast.success(result.data.message)
+      navigate("/")
+    }
+    catch (error){
+      toast.error(result.data.message)
+    }
+
   }
 
   return (
@@ -149,8 +169,8 @@ const Dashboard = () => {
                 />
               )}
 
-              <button className="border-2 border-btn-color px-4 rounded-lg py-2 text-primary hover:bg-btn-color/[0.8]">
-                Logout
+              <button onClick={logOut} className="border-2 border-btn-color px-4 rounded-lg py-2 text-primary hover:bg-btn-color/[0.8]">
+                Log out
               </button>
             </nav>
             
