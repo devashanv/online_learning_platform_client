@@ -17,6 +17,7 @@ const CourseDetails = () => {
     const [description, setDescription] = useState("");
     const [content, setContent] = useState("");
 
+
     //get course data
     useEffect(() => {
         const getCourse = async () => {
@@ -50,14 +51,8 @@ const CourseDetails = () => {
     const enrollCourseHandle = async (e) => {
         try{
             e.preventDefault();
-            
-            console.log("course", _id)
-            console.log("student", loggedUserData._id)
 
             const {data} = await axios.post(`${backendURL}/api/enroll/save`, {courseId: _id, studentId: loggedUserData._id})
-
-            console.log(data)
-            console.log(data.success)
 
             if (data.success){
                 toast.success(data.message)
