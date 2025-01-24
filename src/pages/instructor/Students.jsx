@@ -8,21 +8,39 @@ import axios from 'axios';
 
 const Students = () => {
     const {backendURL} = useContext(AppContext)
-    const navigate = useNavigate();
     const [students, setStudents] = useState([]);
+    const [courseInfo, setCourseInfo] = useState("")
+    const navigate = useNavigate();
+
+    let recordNo = 1;
 
     //course id
     const location = useLocation();
     const {_id} = location.state;
 
+    const getCourse = async () => {
+      try{
+        const result = await axios.get(`${backendURL}/api/course/course`, { params: {_id: _id} })
+        
+        if (!result){
+          toast.error(result.data.message)
+        }
+        else{
+          setCourseInfo(result.data.course);
+        }
+      }
+      catch (error){
+        toast.error(result.data.message)
+      }
+    }
+
+    getCourse();
+
     //get course data
     useEffect(() => {
         const getCourseStudents = async () => {
             try {
-                const result = await axios.get(
-                `${backendURL}/api/enroll/students`,
-                { params: { courseId: _id } }
-              );
+              const result = await axios.post(`${backendURL}/api/enroll/coursestudents`, {courseId: _id})
 
               setStudents(result.data.students)
 
@@ -49,34 +67,25 @@ const Students = () => {
                 Back to courses
             </button>
 
-            <h2 className="text-xl text-btn-color font-bold">Course Title</h2>
+            <h2 className="text-xl text-btn-color font-bold">{courseInfo.title}</h2>
             <table className="text-xs lg:text-lg border-2 w-full">
                <thead>
                 <tr className="text-sm lg:text-lg">
                     <th className="border-2 py-2 font-medium">#</th>
                     <th className="border-2 py-2 font-medium">Student Name</th>
                     <th className="border-2 py-2 font-medium">Email</th>
-                    <th className="border-2 py-2 font-medium">Enroll Date</th>
                     <th className="border-2 py-2 font-medium">Status</th>
                 </tr>
                </thead>
                <tbody>
                     {students.map((student) => (
                         <tr key={student._id}>
-                            <td className="border-2 px-2 py-2">1</td>
-                            <td className="border-2 px-2 py-2">{student.firstName + " " +  student.lastName}</td>
+                            <td className="border-2 px-2 py-2">{recordNo++}</td>
+                            <td className="border-2 px-2 py-2">{student.firstName + " " + student.lastName}</td>
                             <td className="border-2 px-2 py-2">{student.email}</td>
-                            <td className="border-2 px-2 py-2">2025/01/13</td>
                             <td className="border-2 px-2 py-2">Following</td>
                         </tr>
                     ))}
-                    <tr>
-                        <td className="border-2 px-2 py-2">1</td>
-                        <td className="border-2 px-2 py-2">Ashan Withanarachchi</td>
-                        <td className="border-2 px-2 py-2">ashan@gmail.om</td>
-                        <td className="border-2 px-2 py-2">2025/01/13</td>
-                        <td className="border-2 px-2 py-2">Following</td>
-                    </tr>
                </tbody>
             </table>
         </div>
